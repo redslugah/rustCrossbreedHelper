@@ -8,7 +8,7 @@ import re
 pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
 
 
-def screen_read():
+def image_read():
     # Grayscale, Gaussian blur, Otsu's threshold
     image = cv2.imread("rust.png")
     image = cv2.resize(image, (0, 0), fx=2, fy=2)
@@ -37,9 +37,13 @@ def screen_read():
 
     # Perform text extraction
     data = pytesseract.image_to_string(blur, config='--psm 11 -c tessedit_char_whitelist=WHYXG')
-    #cv2.imshow('first', blur)
-    #cv2.waitKey()
+    # cv2.imshow('first', blur)
+    # cv2.waitKey()
     data = re.sub('\W+', '', data)
     genetics = tuple(char for char in data)
     print(genetics)
     return genetics
+
+
+if __name__ == "__main__":
+    image_read()

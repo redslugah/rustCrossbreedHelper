@@ -1,5 +1,7 @@
 import extractor
 import imageGrabber
+import keyboard
+
 
 class Seed:
     def __init__(self, order, genetic):
@@ -7,12 +9,10 @@ class Seed:
         self.order = order
 
 
-
-def crossbreed_calcs(gene, value):
+def crossbreed_calc(gene, value):
     if gene is None:
         return
     for i in gene:
-        #print(i)
         if i == "W":
             value[i] += 1
         if i == "X":
@@ -26,9 +26,7 @@ def crossbreed_calcs(gene, value):
     return value
 
 
-
-def crossbreed(seeds, value, numb):
-    result = {}
+def crossbreed(seeds, value):
     final = ()
     for i in range(6):
         gene = ()
@@ -36,9 +34,7 @@ def crossbreed(seeds, value, numb):
             value[key] = 0
         for j in seeds:
             gene = gene + ((seeds[j].genetic[i]),)
-        crossbreed_calcs(gene, value)
-        #print(value)
-        #final = final + (max(value, key=value.get),)
+        crossbreed_calc(gene, value)
         max_keys = (key for key, values in value.items() if values == max(value.values()))
         max_keys = list(max_keys)
         final = final + (max_keys,)
@@ -57,16 +53,16 @@ def main():
     seeds = {}
     place = input("1-ground, 2-inventory")
     for i in range(numb):
-        input("next")
-        genetic = ()
-        imageGrabber.grab_image(place)
-        genetic = genetic + extractor.screen_read()
-        #for j in range(6):
-        #    genetic = genetic + (str.upper(input()),)
-            # genetic = ("G", "W", "H", "Y", "G", "X",)
-        seeds[i] = Seed(i, genetic)
-        print(seeds[i].order+1, seeds[i].genetic)
-    crossbreed(seeds, genetic_value, numb)
+        br = 1
+        while br == 1:
+            if keyboard.is_pressed('ctrl'):
+                genetic = ()
+                imageGrabber.grab_image(place)
+                genetic = genetic + extractor.image_read()
+                seeds[i] = Seed(i, genetic)
+                print(seeds[i].order + 1, seeds[i].genetic)
+                br = 0
+    crossbreed(seeds, genetic_value)
 
 
 if __name__ == "__main__":
