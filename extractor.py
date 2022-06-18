@@ -15,9 +15,9 @@ def image_read():
 
     # get (i, j) positions of all RGB pixels that are somewhat bright
     black_pixels = np.where(
-        (image[:, :, 0] >= 100) &
-        (image[:, :, 1] >= 100) &
-        (image[:, :, 2] >= 100)
+        (image[:, :, 0] >= 130) &
+        (image[:, :, 1] >= 130) &
+        (image[:, :, 2] >= 130)
     )
     # set those pixels to black
     image[black_pixels] = [0, 0, 0]
@@ -41,7 +41,7 @@ def image_read():
     # cv2.waitKey()
     data = re.sub('\W+', '', data)
     genetics = tuple(char for char in data)
-    print(genetics)
+    #print(genetics)
     return genetics
 
 
