@@ -41,7 +41,7 @@ def image_read():
     # cv2.waitKey()
     data = re.sub('\W+', '', data)
     genetics = tuple(char for char in data)
-    #print(genetics)
+    # print(genetics)
     return genetics
 
 
